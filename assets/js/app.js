@@ -174,10 +174,10 @@ async function loadTrack(index, autoplay = false) {
     try {
       await audio.play();
       playPauseBtn.textContent = '⏸';
-      playlistNote.textContent = 'Если файл существует в папке assets/audio, воспроизведение начнётся сразу.';
+      playlistNote.textContent = 'Музыка сопровождает путь героев, сохраняя напряжение, нежность и внутренний огонь этой истории.';
     } catch (err) {
       playPauseBtn.textContent = '▶';
-      playlistNote.innerHTML = 'Аудиофайл не найден. Добавьте трек в папку <code>assets/audio</code> с уже подготовленным именем файла.';
+      playlistNote.textContent = 'Саундтрек хранит атмосферу романа: тревогу, любовь, потерю и свет, который не угасает.';
     }
   } else {
     playPauseBtn.textContent = '▶';
@@ -194,7 +194,7 @@ playPauseBtn.addEventListener('click', async () => {
       await audio.play();
       playPauseBtn.textContent = '⏸';
     } catch (err) {
-      playlistNote.innerHTML = 'Пока файлов внутри нет. Скопируйте MP3 в <code>assets/audio</code>, и плеер заработает.';
+      playlistNote.textContent = 'Музыкальная линия остаётся частью этого мира, даже когда звучание на миг уступает место тишине.';
     }
   } else {
     audio.pause();
