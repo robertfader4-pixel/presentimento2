@@ -37,9 +37,6 @@ const playlistNote = document.getElementById('playlistNote');
 let currentChapter = 0;
 let currentTrack = 0;
 let fontSize = Number(localStorage.getItem('reader-font-size') || 1.08);
-let isDragging = false;
-let dragOffsetX = 0;
-let dragOffsetY = 0;
 
 chapterCount.textContent = sections.filter(s => s.title.startsWith('Глава')).length.toString();
 
@@ -137,11 +134,15 @@ openSoundtrackBtn.addEventListener('click', () => {
   soundtrackWindow.classList.remove('minimized');
   restoreSoundtrackBtn.classList.add('hidden');
 });
+
+function updateThemeLabel(){
+  toggleThemeBtn.textContent = document.body.classList.contains('light') ? 'Темнее' : 'Светлее';
+}
+
 toggleThemeBtn.addEventListener('click', () => {
-  document.body.classList.toggle('twilight');
-  const twilight = document.body.classList.contains('twilight');
-  localStorage.setItem('site-theme', twilight ? 'twilight' : 'pastel');
-  toggleThemeBtn.textContent = twilight ? 'Пастель' : 'Сумерки';
+  document.body.classList.toggle('light');
+  localStorage.setItem('site-theme', document.body.classList.contains('light') ? 'light' : 'dark');
+  updateThemeLabel();
 });
 
 function renderPlaylist() {
@@ -228,31 +229,6 @@ restoreSoundtrackBtn.addEventListener('click', () => {
   restoreSoundtrackBtn.classList.add('hidden');
 });
 
-function dragStart(e) {
-  isDragging = true;
-  const rect = soundtrackWindow.getBoundingClientRect();
-  const point = e.touches ? e.touches[0] : e;
-  dragOffsetX = point.clientX - rect.left;
-  dragOffsetY = point.clientY - rect.top;
-  soundtrackWindow.style.left = `${rect.left}px`;
-  soundtrackWindow.style.top = `${rect.top}px`;
-  soundtrackWindow.style.right = 'auto';
-  soundtrackWindow.style.bottom = 'auto';
-}
-function dragMove(e) {
-  if (!isDragging) return;
-  const point = e.touches ? e.touches[0] : e;
-  soundtrackWindow.style.left = `${point.clientX - dragOffsetX}px`;
-  soundtrackWindow.style.top = `${point.clientY - dragOffsetY}px`;
-}
-function dragEnd() { isDragging = false; }
-
-dragHandle.addEventListener('mousedown', dragStart);
-window.addEventListener('mousemove', dragMove);
-window.addEventListener('mouseup', dragEnd);
-dragHandle.addEventListener('touchstart', dragStart, {passive:true});
-window.addEventListener('touchmove', dragMove, {passive:true});
-window.addEventListener('touchend', dragEnd);
 
 window.addEventListener('hashchange', () => {
   const idx = getChapterIndexFromHash();
@@ -263,17 +239,20 @@ window.addEventListener('hashchange', () => {
 });
 
 function init() {
-  if (localStorage.getItem('site-theme') === 'twilight') {
-    document.body.classList.add('twilight');
+  const savedTheme = localStorage.getItem('site-theme');
+  if (savedTheme === 'dark') {
+    document.body.classList.remove('light');
+  } else {
+    document.body.classList.add('light');
   }
-  toggleThemeBtn.textContent = document.body.classList.contains('twilight') ? 'Пастель' : 'Сумерки';
-  soundtrackWindow.classList.add('minimized');
-  restoreSoundtrackBtn.classList.remove('hidden');
+  updateThemeLabel();
   document.documentElement.style.setProperty('--reader-size', `${fontSize}rem`);
   currentChapter = getChapterIndexFromHash();
   renderCatalog();
   renderReader();
   renderPlaylist();
   loadTrack(0, false);
+  soundtrackWindow.classList.add('minimized');
+  restoreSoundtrackBtn.classList.remove('hidden');
 }
 init();

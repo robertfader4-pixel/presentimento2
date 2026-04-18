@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body>
+<body class="light">
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
   <div class="ambient ambient-three"></div>
@@ -22,8 +22,8 @@
         <span class="brand-title">Предчувствие 2</span>
       </a>
       <div class="topbar-actions">
-        <button class="ghost-btn" id="openSoundtrack">Плейлист</button>
-        <button class="ghost-btn" id="toggleTheme">Свет</button>
+        <button class="ghost-btn" id="openSoundtrack">Музыка</button>
+        <button class="ghost-btn" id="toggleTheme">Тема</button>
       </div>
     </nav>
 
@@ -46,16 +46,11 @@
         </div>
       </div>
 
-      <div class="hero-art glass">
-        <div class="moon"></div>
-        <div class="fortress">
-          <div class="tower tower-left"></div>
-          <div class="tower tower-main"></div>
-          <div class="tower tower-right"></div>
-          <div class="wall"></div>
-        </div>
+      <div class="hero-art glass hero-art-image">
+        <img src="assets/images/hero-main.png" alt="Главный образ романа" class="hero-main-image" />
+        <div class="hero-image-overlay"></div>
         <div class="hero-quote">
-          «В этом мире чувства сильнее стен, а память — опаснее оружия».
+          «Предчувствие 2» — история о любви, боли, предательстве и свете, который не исчезает даже после крушения мира.
         </div>
       </div>
     </section>
@@ -65,10 +60,10 @@
     <section id="home" class="intro-panel glass">
       <div>
         <p class="section-label">о проекте</p>
-        <h2>Элегантный формат для большой истории</h2>
+        <h2>Роман в цельном цифровом пространстве</h2>
         <p>
-          Сайт построен как единое читательское пространство: без перезагрузок между главами, с поиском,
-          оглавлением, переключением размера шрифта и ненавязчивой сворачиваемой музыкальной панелью.
+          Здесь собрана вся история: главы, удобная навигация, мягкая пастельная палитра, изменение размера шрифта
+          и аккуратно закреплённый музыкальный блок, который можно открыть только тогда, когда он нужен.
         </p>
       </div>
       <div class="intro-side">
@@ -116,8 +111,8 @@
   <section id="soundtrackWindow" class="soundtrack glass" aria-label="Плейлист">
     <div class="soundtrack-header drag-handle">
       <div>
-        <p class="section-label">soundtrack</p>
-        <h3>Плейлист романа</h3>
+        <p class="section-label">саундтрек</p>
+        <h3>Музыка романа</h3>
       </div>
       <div class="soundtrack-actions">
         <button class="icon-btn" id="minimizeSoundtrack" title="Свернуть">—</button>
@@ -156,7 +151,7 @@
     <audio id="audio"></audio>
   </section>
 
-  <button id="restoreSoundtrack" class="restore-soundtrack hidden">♫ Плейлист</button>
+  <button id="restoreSoundtrack" class="restore-soundtrack hidden">♫ Музыка</button>
 
   <script src="assets/js/novel-data.js"></script>
   <script src="assets/js/app.js"></script>
