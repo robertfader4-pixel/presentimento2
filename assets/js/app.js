@@ -2,12 +2,10 @@
 const sections = window.NOVEL_DATA.sections;
 const tracks = window.NOVEL_DATA.tracks;
 
-const chapterGrid = document.getElementById('chapterGrid');
 const chapterList = document.getElementById('chapterList');
 const chapterCount = document.getElementById('chapterCount');
 const readerTitle = document.getElementById('readerTitle');
 const readerContent = document.getElementById('readerContent');
-const searchInput = document.getElementById('chapterSearch');
 
 const prevChapterBtn = document.getElementById('prevChapter');
 const nextChapterBtn = document.getElementById('nextChapter');
@@ -54,23 +52,6 @@ function formatTime(seconds) {
   return `${mins}:${secs}`;
 }
 
-function renderCatalog(filter = '') {
-  const q = filter.trim().toLowerCase();
-  chapterGrid.innerHTML = '';
-  sections
-    .filter(section => section.title.toLowerCase().includes(q))
-    .forEach((section, index) => {
-      const card = document.createElement('button');
-      card.className = 'chapter-card';
-      card.innerHTML = `
-        <div class="num">${section.title.startsWith('Эпилог') ? 'финал' : 'глава'}</div>
-        <h3>${section.title}</h3>
-        <p>${section.excerpt}</p>
-      `;
-      card.addEventListener('click', () => openChapter(index));
-      chapterGrid.appendChild(card);
-    });
-}
 
 function renderSidebar() {
   chapterList.innerHTML = '';
@@ -114,7 +95,6 @@ nextChapterBtn.addEventListener('click', () => {
   renderReader();
 });
 
-searchInput.addEventListener('input', (e) => renderCatalog(e.target.value));
 
 fontUpBtn.addEventListener('click', () => {
   fontSize = Math.min(fontSize + 0.08, 1.72);
@@ -248,7 +228,6 @@ function init() {
   updateThemeLabel();
   document.documentElement.style.setProperty('--reader-size', `${fontSize}rem`);
   currentChapter = getChapterIndexFromHash();
-  renderCatalog();
   renderReader();
   renderPlaylist();
   loadTrack(0, false);
